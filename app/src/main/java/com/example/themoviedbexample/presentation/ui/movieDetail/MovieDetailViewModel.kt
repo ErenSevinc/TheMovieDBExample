@@ -16,6 +16,12 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
 
+    private val _isLoading =MutableLiveData<Boolean>(true)
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _error =MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
     private val _movieDetail = MutableLiveData<MovieDetailResult>()
     val movieDetail: LiveData<MovieDetailResult> = _movieDetail
 
@@ -23,10 +29,18 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             getMovieDetailUseCase.execute(movieId).collect {
                 when(it) {
-                    is Resource.Error -> Unit
-                    is Resource.Loading -> Unit
+                    is Resource.Error -> {
+                        it.errorMessage?.let { result ->
+                            _isLoading.value = false
+                            _error.value = result
+                        }
+                    }
+                    is Resource.Loading -> {
+                        _isLoading.value = true
+                    }
                     is Resource.Success -> {
                         it.data?.let { result ->
+                            _isLoading.value = false
                             _movieDetail.value = result
                         }
                     }
