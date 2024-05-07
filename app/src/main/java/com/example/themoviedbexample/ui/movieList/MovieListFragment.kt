@@ -6,18 +6,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.themoviedbexample.databinding.FragmentMovieListBinding
-import com.example.themoviedbexample.ui.MovieAdapter
+import com.example.themoviedbexample.ui.MoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private val viewModel: MovieListViewModel by viewModels()
     private var binding : FragmentMovieListBinding? = null
-    private var adapter: MovieAdapter? = null
+    private var adapter: MoviesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,7 @@ class MovieListFragment : Fragment() {
     }
 
     private fun setupLayout() {
-        adapter = MovieAdapter { id ->
+        adapter = MoviesAdapter { id ->
             val direction = MovieListFragmentDirections.navigateToDetail(id)
             findNavController().navigate(direction)
         }
@@ -42,8 +44,10 @@ class MovieListFragment : Fragment() {
     }
 
     private fun setupViewObservers() {
-        viewModel.movies.observe(viewLifecycleOwner) {
-            adapter?.submitList(it)
+        lifecycleScope.launch {
+            viewModel.getPopularMovies().collectLatest { movies ->
+                adapter?.submitData(movies)
+            }
         }
     }
 

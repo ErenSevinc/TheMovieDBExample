@@ -1,16 +1,17 @@
 package com.example.themoviedbexample.data.model.list
 
+import com.example.themoviedbexample.domain.model.Movie
 import com.google.gson.annotations.SerializedName
 
-data class MoviesResult(
+class MoviesResult<T : Any?>(
     @SerializedName("page")
-    val page: Long? = null,
+    val page: Int? = null,
     @SerializedName("total_results")
     val totalResults: Long? = null,
     @SerializedName("total_pages")
     val totalPages: Long? = null,
     @SerializedName("results")
-    val results: MutableList<MovieItem>? = emptyList<MovieItem>().toMutableList()
+    val results: T? = null
 )
 
 
@@ -33,8 +34,6 @@ data class MovieItem(
     val originalLanguage: String?,
     @SerializedName("title")
     val title: String?,
-    @SerializedName("name")
-    val name: String?,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
     @SerializedName("popularity")
