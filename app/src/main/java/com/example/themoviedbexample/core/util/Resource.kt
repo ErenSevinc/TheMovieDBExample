@@ -1,4 +1,4 @@
-package com.example.themoviedbexample.util
+package com.example.themoviedbexample.core.util
 
 sealed class Resource<out T> {
     data object Loading: Resource<Nothing>()

@@ -1,4 +1,4 @@
-package com.example.themoviedbexample.ui
+package com.example.themoviedbexample.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.themoviedbexample.databinding.ItemViewMovieBinding
 import com.example.themoviedbexample.domain.model.Movie
-import com.example.themoviedbexample.util.Constants.IMG_BASE_URL
+import com.example.themoviedbexample.core.util.Constants.IMG_BASE_URL
 import javax.inject.Inject
 
 class MoviesAdapter @Inject constructor(private val onClick: (id: Long) -> Unit) :

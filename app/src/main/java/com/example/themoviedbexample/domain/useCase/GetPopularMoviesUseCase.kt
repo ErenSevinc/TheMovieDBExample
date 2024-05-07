@@ -1,9 +1,9 @@
 package com.example.themoviedbexample.domain.useCase
 
 import androidx.paging.PagingData
+import com.example.themoviedbexample.core.util.PagingUseCase
 import com.example.themoviedbexample.domain.model.Movie
 import com.example.themoviedbexample.domain.repository.MovieRepository
-import com.example.themoviedbexample.presentation.PagingUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -15,4 +15,5 @@ class GetPopularMoviesUseCase @Inject constructor(
         return repository.getPopularMovies()
     }
 }
+
 

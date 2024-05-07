@@ -60,6 +60,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
 
+    implementation(libs.androidx.core.splashscreen)
+
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.kapt)
 

@@ -1,4 +1,4 @@
-package com.example.themoviedbexample.ui.movieDetail
+package com.example.themoviedbexample.presentation.ui.movieDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,8 @@ import com.bumptech.glide.Glide
 import com.example.themoviedbexample.R
 import com.example.themoviedbexample.databinding.FragmentMovieDetailBinding
 import com.example.themoviedbexample.databinding.FragmentMovieListBinding
-import com.example.themoviedbexample.util.Constants.IMG_BASE_URL
+import com.example.themoviedbexample.core.util.Constants.IMG_BASE_URL
+import com.example.themoviedbexample.core.util.toDate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +41,7 @@ class MovieDetailFragment : Fragment() {
                 Glide.with(requireContext()).load(IMG_BASE_URL + movie.posterPath).into(imageMovie)
                 textTitle.text =  movie.title ?: movie.originalTitle
                 textGenre.text = buildString { movie.genres?.forEach { append("${it.name} ") } }
-                textReleaseDate.text = movie.releaseDate
+                textReleaseDate.text = movie.releaseDate?.toDate()
                 textDescription.text = movie.overview
             }
         }

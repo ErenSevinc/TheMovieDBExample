@@ -2,7 +2,7 @@ package com.example.themoviedbexample.domain.useCase
 
 import com.example.themoviedbexample.data.model.detail.MovieDetailResult
 import com.example.themoviedbexample.domain.repository.MovieRepository
-import com.example.themoviedbexample.util.Resource
+import com.example.themoviedbexample.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

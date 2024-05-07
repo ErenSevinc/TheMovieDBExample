@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.TheMovieDBExample" parent="Base.Theme.TheMovieDBExample" />
+
+    <style name="Theme.App.SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimationDuration">5000</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/baseline_local_movies_24</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.TheMovieDBExample</item>
+    </style>
 </resources>

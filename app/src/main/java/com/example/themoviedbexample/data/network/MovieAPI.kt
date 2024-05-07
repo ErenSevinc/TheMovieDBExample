@@ -3,7 +3,7 @@ package com.example.themoviedbexample.data.network
 import com.example.themoviedbexample.data.model.detail.MovieDetailResult
 import com.example.themoviedbexample.data.model.list.MovieItem
 import com.example.themoviedbexample.data.model.list.MoviesResult
-import com.example.themoviedbexample.util.Constants
+import com.example.themoviedbexample.core.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

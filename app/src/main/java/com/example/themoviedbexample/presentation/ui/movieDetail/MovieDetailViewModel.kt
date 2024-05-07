@@ -1,4 +1,4 @@
-package com.example.themoviedbexample.ui.movieDetail
+package com.example.themoviedbexample.presentation.ui.movieDetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.themoviedbexample.data.model.detail.MovieDetailResult
 import com.example.themoviedbexample.domain.useCase.GetMovieDetailUseCase
-import com.example.themoviedbexample.util.Resource
+import com.example.themoviedbexample.core.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

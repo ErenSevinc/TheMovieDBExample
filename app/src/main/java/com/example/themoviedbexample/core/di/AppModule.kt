@@ -1,4 +1,4 @@
-package com.example.themoviedbexample.di
+package com.example.themoviedbexample.core.di
 
 import com.example.themoviedbexample.data.dataSource.MovieDataSource
 import com.example.themoviedbexample.data.dataSource.MovieDataSourceImpl
@@ -6,7 +6,7 @@ import com.example.themoviedbexample.data.network.MovieAPI
 import com.example.themoviedbexample.data.repository.MovieRepositoryImpl
 import com.example.themoviedbexample.domain.repository.MovieRepository
 import com.example.themoviedbexample.domain.useCase.GetPopularMoviesUseCase
-import com.example.themoviedbexample.util.Constants.BASE_URL
+import com.example.themoviedbexample.core.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object AppModule {
 
     @Provides
     @Singleton
