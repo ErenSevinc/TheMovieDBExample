@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.example.themoviedbexample.databinding.FragmentMovieListBinding
+import com.example.themoviedbexample.presentation.adapter.LoaderAdapter
 import com.example.themoviedbexample.presentation.adapter.MoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -40,7 +42,10 @@ class MovieListFragment : Fragment() {
             findNavController().navigate(direction)
         }
         binding?.apply {
-            listMovie.adapter = adapter
+            listMovie.adapter = adapter?.withLoadStateHeaderAndFooter(
+                header =LoaderAdapter(),
+                footer = LoaderAdapter()
+            )
         }
     }
 
