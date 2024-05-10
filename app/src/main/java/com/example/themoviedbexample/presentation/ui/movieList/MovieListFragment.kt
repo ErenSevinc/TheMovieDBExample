@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.example.themoviedbexample.databinding.FragmentMovieListBinding
 import com.example.themoviedbexample.presentation.adapter.LoaderAdapter
@@ -43,9 +46,24 @@ class MovieListFragment : Fragment() {
         }
         binding?.apply {
             listMovie.adapter = adapter?.withLoadStateHeaderAndFooter(
-                header =LoaderAdapter(),
-                footer = LoaderAdapter()
+                header =LoaderAdapter {
+                    adapter?.retry()
+                },
+                footer = LoaderAdapter {
+                    adapter?.retry()
+                }
             )
+            adapter?.addLoadStateListener {loadState ->
+                listMovie.isVisible = loadState.source.refresh is LoadState.NotLoading
+                loading.isVisible = loadState.source.refresh is LoadState.Loading
+                buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
+
+                handleError(loadState)
+            }
+
+            buttonRetry.setOnClickListener {
+                adapter?.retry()
+            }
         }
     }
 
@@ -55,6 +73,16 @@ class MovieListFragment : Fragment() {
                 adapter?.submitData(movies)
                 Log.d("PAGING",movies.toString())
             }
+        }
+    }
+
+    private fun handleError(loadStates: CombinedLoadStates) {
+        val errorState = loadStates.source.append as? LoadState.Error
+            ?: loadStates.source.prepend as? LoadState.Error
+
+
+        errorState?.let {
+            Toast.makeText(requireContext(),errorState.error.localizedMessage,Toast.LENGTH_LONG).show()
         }
     }
 

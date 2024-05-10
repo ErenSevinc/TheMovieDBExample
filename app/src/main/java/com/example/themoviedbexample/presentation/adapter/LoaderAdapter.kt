@@ -10,13 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.themoviedbexample.databinding.ItemLoaderBinding
 import com.example.themoviedbexample.databinding.ItemViewMovieBinding
 
-class LoaderAdapter : LoadStateAdapter<LoaderAdapter.LoaderViewHolder>() {
+class LoaderAdapter(
+    private val retry: () -> Unit
+) : LoadStateAdapter<LoaderAdapter.LoaderViewHolder>() {
 
-    class LoaderViewHolder(private val binding: ItemLoaderBinding) :
+    class LoaderViewHolder(private val binding: ItemLoaderBinding, retry: () -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(loadState: LoadState) {
-                binding.loading.isVisible = loadState is LoadState.Loading
+
+            init {
+                binding.buttonRetry.setOnClickListener {
+                    retry.invoke()
+                }
             }
+        fun bind(loadState: LoadState) {
+            if (loadState is LoadState.Error) {
+                binding.tvError.text = loadState.error.localizedMessage
+            }
+
+            binding.loading.isVisible = loadState is LoadState.Loading
+            binding.tvError.isVisible = loadState !is LoadState.Loading
+            binding.buttonRetry.isVisible = loadState !is LoadState.Loading
+        }
     }
 
     override fun onBindViewHolder(holder: LoaderViewHolder, loadState: LoadState) {
@@ -26,6 +40,6 @@ class LoaderAdapter : LoadStateAdapter<LoaderAdapter.LoaderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoaderViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemLoaderBinding.inflate(inflater, null, false)
-        return LoaderAdapter.LoaderViewHolder(binding)
+        return LoaderAdapter.LoaderViewHolder(binding, retry)
     }
 }
